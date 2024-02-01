@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sound Recorder</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h5>Lapel Microphone Audio System</h5>
+  <section id="right-section">
+     <h1>Audio Sender</h1>
+     <iframe src="https://www.speakpipe.com/widget/inline/f5eq1vwzoh0kjr33dphjka6a4be0y8ua" allow="microphone" width="100%" height="200" frameborder="0"></iframe>
+     <h3></h3>
+  </section>
+  
+  <section id="left-section" class="audio-recorder">
+    
+    <h2>Audio Recorder</h1>
+    <div id="timer">00:00</div><br>
+    <audio id="audioPlayer" controls></audio><br>
+    <button id="toggleRecording">🎙️ Start Recording</button>
+    <button id="playRecording" disabled style="display: none;">Play Recording</button>
+    <button id="deleteAudio" disabled>Delete </button>
+    
+  </section>
+  
+   <script async src="https://www.speakpipe.com/widget/loader.js" charset="utf-8"></script>
+   
+    <script>
+        let mediaRecorder;
+        let audioChunks = [];
+        let audioPlayer = document.getElementById('audioPlayer');
+        let toggleRecordingButton = document.getElementById('toggleRecording');
+        let playRecordingButton = document.getElementById('playRecording');
+        let deleteAudioButton = document.getElementById('deleteAudio');
+        let timerDisplay = document.getElementById('timer');
+
+        let timerInterval;
+        let seconds = 0;
+
+        toggleRecordingButton.addEventListener('click', toggleRecording);
+        playRecordingButton.addEventListener('click', playRecording);
+        deleteAudioButton.addEventListener('click', deleteAudio);
+
+        function toggleRecording() {
+            if (mediaRecorder && mediaRecorder.state === 'recording') {
+                stopRecording();
+                toggleRecordingButton.innerText = '🎙️ Start  Recording';
+                timerDisplay.style.display = 'none';  // Hide timer after stopping
+                audioPlayer.style.display = 'block';  // Reveal audio player after stopping
+            } else {
+                startRecording();
+                toggleRecordingButton.innerText = '🎙️ Stop Recording';
+                timerDisplay.style.display = 'block';  // Reveal timer during recording
+                audioPlayer.style.display = 'none';  // Hide audio player during recording
+            }
+        }
+
+        function startRecording() {
+            // Clear the previous audio data, reset the timer, and update the timer display
+            audioChunks = [];
+            seconds = 0;
+            updateTimerDisplay();
+
+            // Request user's microphone access
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then((stream) => {
+                    mediaRecorder = new MediaRecorder(stream);
+                    mediaRecorder.ondataavailable = (event) => {
+                        if (event.data.size > 0) {
+                            audioChunks.push(event.data);
+                        }
+                    };
+
+                    mediaRecorder.onstop = () => {
+                        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+
+                        // Enable playback and delete buttons
+                        playRecordingButton.disabled = false;
+                        deleteAudioButton.disabled = false;
+
+                        // Set the recorded audio as the source for the audio player
+                        audioPlayer.src = URL.createObjectURL(audioBlob);
+
+                        // Reveal the audio player after stopping
+                        audioPlayer.style.display = 'block';
+                    };
+
+                    // Start the recording
+                    mediaRecorder.start();
+
+                    // Update the UI
+                    toggleRecordingButton.disabled = false;
+                    playRecordingButton.disabled = true;
+                    deleteAudioButton.disabled = true;
+
+                    // Start the timer
+                    startTimer();
+                })
+                .catch((error) => {
+                    console.error('Error accessing microphone:', error);
+                });
+        }
+
+        function stopRecording() {
+            // Stop the recording
+            mediaRecorder.stop();
+
+            // Update the UI
+            toggleRecordingButton.disabled = false;
+            playRecordingButton.disabled = false;
+            deleteAudioButton.disabled = false;
+
+            // Stop the timer
+            clearInterval(timerInterval);
+            timerDisplay.innerHTML = '';
+
+            // Hide the timer after stopping
+            timerDisplay.style.display = 'none';
+
+            // Reveal the audio player after stopping
+            audioPlayer.style.display = 'block';
+        }
+
+        function playRecording() {
+            audioPlayer.play();
+        }
+
+        function deleteAudio() {
+            // Clear recorded audio, reset the timer, and update the timer display
+            audioChunks = [];
+            seconds = 0;
+            updateTimerDisplay();
+
+            // Disable playback and delete buttons
+            playRecordingButton.disabled = true;
+            deleteAudioButton.disabled = true;
+
+            // Reset the audio player
+            audioPlayer.src = '';
+
+            // Hide the timer after deleting
+            timerDisplay.style.display = 'none';
+        }
+
+        function startTimer() {
+            // Update the timer every second
+            timerInterval = setInterval(() => {
+                seconds++;
+                updateTimerDisplay();
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            timerDisplay.innerHTML = `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+        }
+    </script>
+</body>
+</html>

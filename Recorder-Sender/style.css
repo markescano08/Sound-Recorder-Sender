@@ -1,0 +1,97 @@
+body {
+            display: flex;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+#left-section,#right-section{
+    background-color: white;
+    margin: 15px;
+    padding: 18px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    height: 200px;
+    margin-left: 100px;
+    margin-top: 80px;
+    text-align: center;
+    z-index: 1;
+    position:relative;
+  }
+
+#left-section{
+  margin-right:100px;
+}
+
+h1{
+  z-index: 2;
+  position: absolute;
+  padding-left: 15%;
+  border:none;
+  background: white;
+  height: 40px;
+  width: 200px;
+  padding-top: 20px;
+  margin-top: -5px;
+  color:#ED4104;
+}
+
+h5{
+  z-index: 3;
+  position: absolute;
+  padding-left:20%;
+  border:none;
+  height: 130px;
+  width: 600px;
+  font-size: 40px;
+  margin-top: 10px;
+  color: #6B6B6B;
+}
+
+h3{
+  z-index: 3;
+  position: absolute;
+  padding-left: 16%;
+  border:none;
+  background: white;
+  height: 40px;
+  width: 200px;
+  margin-top: -30px;
+}
+
+  h2{
+    text-align: center;
+    color:#ED4104;
+  }
+
+ #audioPlayer {
+    display: none;
+  }
+  
+ #toggleRecording{
+   text-align: center;
+   color: #fff;
+   border: none;
+   background-color: #ED4104;
+   height:30px;
+   width: 140px;
+   border-radius: 5px;
+ }
+ 
+ #toggleRecording:hover{
+   border:2px solid #000000;
+ }
+ 
+ #deleteAudio{
+   text-align: center;
+   border:none;
+   background: none;
+   color: #FF4300;
+ }
+ #timer{
+   font-weight: bolder;
+   font-size: 3em;
+   font-family: monospace;
+   color: #787878;
+ }
