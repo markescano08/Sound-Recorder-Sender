@@ -1,0 +1,110 @@
+body {
+            display: flex;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+#left-section,#right-section{
+    background-color: white;
+    margin: 15px;
+    padding: 18px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 70, 0.5);
+    width: 800px;
+    height: 250px;
+    margin-top: 180px;
+    text-align: center;
+    z-index: 1;
+    position:relative;
+  }
+
+#left-section{
+  margin-right:100px;
+}
+
+.sender{
+  padding-top: 40px;
+}
+
+h1{
+  z-index: 2;
+  position: absolute;
+  padding-left: 18%;
+  border:none;
+  background: none;
+  height: 40px;
+  width: 200px;
+  margin-top: 0px;
+  color:#E85E2C;
+}
+
+h5{
+  z-index: 3;
+  position: absolute;
+  padding-left:20%;
+  border:none;
+  height: 140px;
+  width: 900px;
+  font-size: 30px;
+  margin-top: 50px;
+  color: #A8360C;
+  font-weight: bold;
+}
+
+
+  h2{
+    text-align: center;
+    color:#E85E2C;
+    margin-top: 0px;
+  }
+
+ #audioPlayer {
+    display: none;
+  }
+  
+ #toggleRecording{
+   text-align: center;
+   color: #fff;
+   border: none;
+   background-color: #F1531B;
+   height:50px;
+   width: 190px;
+   border-radius: 5px;
+   font-size: 18px;
+ }
+ 
+ #toggleRecording:hover{
+   border:2px solid #000000;
+ }
+ 
+ #deleteAudio{
+   text-align: center;
+   border:none;
+   background: none;
+   color: #FF4300;
+ }
+ 
+ #timer{
+   font-weight: bolder;
+   font-size: 4em;
+   font-family: monospace;
+   color: #787878;
+ }
+
+
+.jzg {
+  max-width: 130px;
+  height: 130px;
+  margin-top: 20px;
+  margin-left: 30px;
+}
+
+.tes{
+  max-width: 130px;
+  height: 130px;
+  z-index: 5;
+  margin-top: 20px;
+  margin-left: 750px;
+  position: absolute;
+}
